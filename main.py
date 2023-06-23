@@ -2,7 +2,7 @@ from fligths import SearchFlight
 from cities import Ciudades
 from emails import SendEmail
 import schedule
-import time, pytz
+import time , pytz,os
 
 
 def run():
@@ -15,12 +15,15 @@ def run():
                             dict_ciudades[i]["children"], dict_ciudades[i]["desde"], dict_ciudades[i]["hasta"])
         if city.is_cheap_flight():
             mail = SendEmail(city.create_email(), i)
-            print("found one flight, email sent")
+            print("found one flight, email sent\n\n")
         else:
-            print("Cheap flight not found")
+            print("Cheap flight not found\n\n")
 
+    time.sleep(5)
+    os.system("clear")
+    print("Mañana a las 07:00 busco más vuelos.\n\n")
 
-schedule.every().day.at("07:00", "Europe/Amsterdam").do(run)
+schedule.every(1).day.at("07:00", "Europe/Amsterdam").do(run)
 run()
 while True:
     schedule.run_pending()
